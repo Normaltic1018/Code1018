@@ -8,3 +8,4 @@ class Profile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     nick = models.CharField(verbose_name='NickName', max_length=50, blank=True,)
+    birth_date = models.DateTimeField(null=True, blank=True)
