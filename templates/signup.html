@@ -7,7 +7,9 @@
   <h2>Sign Up</h2>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.user.as_p }}
+
+    {{ form.profile.as_p }}
     <button type="submit">Sign Up</button>
   </form>
 {% endblock %}
