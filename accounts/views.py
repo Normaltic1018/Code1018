@@ -3,7 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import redirect
-from .forms import ProfileForm, UserCreationMultiForm
+from .forms import ProfileForm, UserCreationMultiForm, UserInfoForm
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.contrib.auth.models import User
 
@@ -23,3 +24,8 @@ class UserSignupView(generic.CreateView):
         profile.user = user
         profile.save()
         return redirect(self.success_url)
+
+class UserInfoView(LoginRequiredMixin, generic.DetailView):
+    model = User
+    #form_class = UserInfoForm
+    template_name = 'mypage.html'

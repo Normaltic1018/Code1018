@@ -1,1 +1,2 @@
 pip3 install django-betterforms
+pip3 install Pillow
