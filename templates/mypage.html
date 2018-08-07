@@ -1,4 +1,4 @@
-<!-- templates/signup.html -->
+<!-- templates/mypage.html -->
 {% extends 'base.html' %}
 
 {% block title %}Sign Up{% endblock %}
@@ -6,7 +6,14 @@
 {% block content %}
   <h2>My Page</h2>
 
-    {{ form.user.as_p }}
-
+    <p>ID : {{ id }}</p>
+    <p><img src="{% if profile_pic %} {{ profile_pic }} {% else %} /media/default.jpg {% endif %}" width="200" height="300" /></p>
+  </br>
+    <p>Name : {% if first_name %} {{ first_name }}, {{ last_name }} {%else%} Fill your names {% endif %} </p>
+    <p>NickName : {% if nick %}{{ nick }}{% else %}Fill your NickName{% endif %} </p>
+    <p>Level : {{ level }} </p>
+    <p>Birth Date : {{ birth_date }} </p>
+  </br>
+    <p>Introduce : {{ intro }}</p>
 
 {% endblock %}

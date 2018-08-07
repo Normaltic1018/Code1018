@@ -7,7 +7,5 @@ from django.conf import settings
 
 urlpatterns = [
     path('signup/', views.UserSignupView.as_view(), name='signup'),
-    path('mypage/', views.UserInfoView.as_view() ,name='mypage'),
+    path('mypage/', views.userinfo ,name='mypage'),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
