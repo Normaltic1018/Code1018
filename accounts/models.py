@@ -21,7 +21,7 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True)
     intro = models.TextField(blank=True,help_text='Introduce your self.')
 
-    profile_image = models.ImageField(blank=True, upload_to='user/profile_pic')
+    profile_image = models.ImageField(upload_to='user/profile_pic', default='default.jpg')
     level = models.CharField(
         max_length=1,
         choices=LEVEL,

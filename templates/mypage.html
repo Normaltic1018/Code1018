@@ -7,7 +7,7 @@
   <h2>My Page</h2>
 
     <p>ID : {{ id }}</p>
-    <p><img src="{% if profile_pic %} {{ profile_pic }} {% else %} /media/default.jpg {% endif %}" width="200" height="300" /></p>
+    <p><img src="{{ profile_pic }}" width="200" height="300" /></p>
   </br>
     <p>Name : {% if first_name %} {{ first_name }}, {{ last_name }} {%else%} Fill your names {% endif %} </p>
     <p>NickName : {% if nick %}{{ nick }}{% else %}Fill your NickName{% endif %} </p>

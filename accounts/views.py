@@ -34,11 +34,6 @@ def userinfo(request):
     conn_profile = Profile.objects.get(user=conn_user)
     level_dict = dict(Profile.LEVEL)
 
-    if not conn_profile.profile_image:
-        pic_url = ""
-    else:
-        pic_url = conn_profile.profile_image.url
-
     context = {
         'id' : conn_user.username,
         'first_name' : conn_user.first_name,
@@ -46,7 +41,7 @@ def userinfo(request):
         'nick' : conn_profile.nick,
         'level' : level_dict[conn_profile.level],
         'birth_date' : conn_profile.birth_date,
-        'profile_pic' : pic_url,
+        'profile_pic' : conn_profile.profile_image.url,
         'intro' : conn_profile.intro,
     }
     return render(request, 'mypage.html', context=context)
