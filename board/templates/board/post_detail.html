@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Code1018{% endblock %}
+
+{% block content %}
+<h1>Title: {{ post.post_title }}</h1>
+
+<p><strong>Writer:</strong> {{ post.writer }}</p>
+<p><strong>Write_Date:</strong> {{ post.post_date }}</p>
+
+<div style="margin-left:20px;margin-top:20px">
+  <h4>Contents</h4>
+  {{ post.post_contents}}
+</div>
+
+{% endblock %}

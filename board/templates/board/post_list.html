@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Code1018{% endblock %}
+
+{% block content %}
+{% if post_list %}
+  <ul>
+    {% for post in post_list %}
+      <li>
+        <a href="{{ post.get_abolute_url }}">{{ post.post_title }}</a> ({{ post.post_date }}) - {{ post.writer}}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no posts in the board.</p>
+  {% endif %}
+
+  <p><a href="{% url 'post_write' %}">Write</a></p>
+{% endblock %}
