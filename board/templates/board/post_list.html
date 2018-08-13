@@ -3,6 +3,15 @@
 {% block title %}Code1018{% endblock %}
 
 {% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script> alert('{{ message }}'); </script>
+    {% endfor %}
+</ul>
+{% endif %}
+
 {% if post_list %}
   <ul>
     {% for post in post_list %}

@@ -13,4 +13,6 @@
   {{ post.post_contents}}
 </div>
 
+<p><a href="{% url 'post_update' post.pk %}">Update</a></p>
+
 {% endblock %}
