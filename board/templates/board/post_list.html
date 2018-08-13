@@ -16,7 +16,7 @@
   <ul>
     {% for post in post_list %}
       <li>
-        <a href="{{ post.get_abolute_url }}">{{ post.post_title }}</a> ({{ post.post_date }}) - {{ post.writer}}
+        <a href="{{ post.get_abolute_url }}">{{ post.post_title }}</a> ({{ post.post_date }}) - <a href="{% url 'userpage' post.writer %}">{{ post.writer}}</a>
       </li>
     {% endfor %}
   </ul>

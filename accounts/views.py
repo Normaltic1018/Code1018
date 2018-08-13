@@ -45,3 +45,21 @@ def userinfo(request):
         'intro' : conn_profile.intro,
     }
     return render(request, 'mypage.html', context=context)
+
+@login_required
+def user_select_info(request, writer):
+    select_profile = Profile.objects.get(nick=writer)
+    select_user = select_profile.user
+    level_dict = dict(Profile.LEVEL)
+
+    context = {
+        'id' : select_user.username,
+        'first_name' : select_user.first_name,
+        'last_name' : select_user.last_name,
+        'nick' : select_profile.nick,
+        'level' : level_dict[select_profile.level],
+        'birth_date' : select_profile.birth_date,
+        'profile_pic' : select_profile.profile_image.url,
+        'intro' : select_profile.intro,
+    }
+    return render(request, 'userpage.html', context=context)
