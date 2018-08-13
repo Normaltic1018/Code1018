@@ -29,3 +29,6 @@ class Profile(models.Model):
         default='n',
         help_text='Class Level',
     )
+
+    def __str__(self):
+        return self.nick

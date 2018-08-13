@@ -15,4 +15,20 @@
 
 <p><a href="{% url 'post_update' post.pk %}">Update</a></p>
 
+<hr>
+  <form action="{% url 'comment_write' post_pk=post.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="content" placeholder="Write your comments">
+    <input type="submit" value="Write" />
+  </form>
+<hr>
+{% for comment in post.comments.all %}
+    <div class="comment">
+        <div class="date">{{ comment.comment_date }}</div>
+        <strong>{{ comment.comment_writer }}</strong>
+        <p>{{ comment.comment_contents }}</p>
+    </div>
+{% empty %}
+    <p>No comments here yet</p>
+{% endfor %}
 {% endblock %}

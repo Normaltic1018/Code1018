@@ -71,3 +71,19 @@ def post_update(request, pk):
         form = CreatePostForm(initial={'post_title': title,'post_contents':content,})
 
     return render(request, 'board/write_post.html', {'form': form})
+
+@login_required
+def comment_write(request, post_pk):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, pk=post_pk)
+        content = request.POST.get('content')
+
+        conn_user = request.user
+        conn_profile = Profile.objects.get(user=conn_user)
+
+        if not content:
+            messages.info(request, 'You dont write anything....')
+            return HttpResponseRedirect(reverse_lazy('post-detail', post_pk))
+
+        Comment.objects.create(post=post, comment_writer=conn_profile,comment_contents=content)
+        return HttpResponseRedirect(reverse_lazy('board_index'))
