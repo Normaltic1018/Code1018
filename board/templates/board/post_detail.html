@@ -5,15 +5,17 @@
 {% block content %}
 <h1>Title: {{ post.post_title }}</h1>
 
-<p><strong>Writer:</strong> {{ post.writer }}</p>
+<p><strong>Writer:</strong> <a href="{% url 'userpage' post.writer %}">{{post.writer}}</a></a></p>
 <p><strong>Write_Date:</strong> {{ post.post_date }}</p>
 
 <div style="margin-left:20px;margin-top:20px">
   <h4>Contents</h4>
+  {{ post.update_counter }}
   {{ post.post_contents}}
 </div>
+</br></br>
 
-<p><a href="{% url 'post_update' post.pk %}">Update</a></p>
+<p><a href="{% url 'post_update' post.pk %}" onclick="return confirm('Really Modify?')">Modify</a>&nbsp;&nbsp;<a href="{% url 'post-delete' post.pk %}" onclick="return confirm('Really? Delete?')">Delete</a></p>
 
 <hr>
   <form action="{% url 'comment_write' post_pk=post.pk %}" method="POST">
@@ -25,7 +27,7 @@
 {% for comment in post.comments.all %}
     <div class="comment">
         <div class="date">{{ comment.comment_date }}</div>
-        <strong>{{ comment.comment_writer }}</strong>
+        <strong><a href="{% url 'userpage' comment.comment_writer %}">{{ comment.comment_writer }}</a></strong>
         <p>{{ comment.comment_contents }}</p>
     </div>
 {% empty %}

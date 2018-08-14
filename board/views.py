@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 import datetime
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def get_nick(user):
     conn_user = user
@@ -87,3 +88,13 @@ def comment_write(request, post_pk):
 
         Comment.objects.create(post=post, comment_writer=conn_profile,comment_contents=content)
         return HttpResponseRedirect(reverse_lazy('board_index'))
+
+
+class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Post
+    success_url = reverse_lazy('board_index')
+
+    def get_queryset(self):
+        conn_user = self.request.user
+        nick = get_nick(conn_user)
+        return self.model.objects.filter(writer=nick)

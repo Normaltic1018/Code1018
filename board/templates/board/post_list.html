@@ -12,17 +12,31 @@
 </ul>
 {% endif %}
 
-{% if post_list %}
-  <ul>
-    {% for post in post_list %}
-      <li>
-        <a href="{{ post.get_abolute_url }}">{{ post.post_title }}</a> ({{ post.post_date }}) - <a href="{% url 'userpage' post.writer %}">{{ post.writer}}</a>
-      </li>
+<table class="table">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Title</th>
+      <th>Writer</th>
+      <th>Date</th>
+      <th>Hits</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if post_list %}
+      {% for post in post_list %}
+    <tr>
+    <td>{{ post.id }}</td>
+    <td><a href="{{ post.get_abolute_url }}">{{ post.post_title }} </a>   ( {{post.comments.count}} )</td>
+    <td>{{ post.writer}}</td>
+    <td>{{ post.post_date }}</td>
+    <td>{{ post.post_hit }}</td>
+  </tr>
     {% endfor %}
-  </ul>
-  {% else %}
-    <p>There are no posts in the board.</p>
-  {% endif %}
-
+    {% else %}
+      <p>There are no posts in the board.</p>
+    {% endif %}
+</tbody>
+</table>
   <p><a href="{% url 'post_write' %}">Write</a></p>
 {% endblock %}
