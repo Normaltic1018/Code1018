@@ -49,6 +49,7 @@ def post_write(request):
 @login_required
 def post_update(request, pk):
     post = get_object_or_404(Post, pk = pk)
+    context = {'post' : post,}
     # save process
     if request.method == 'POST':
         form = CreatePostForm(request.POST, instance=post)
@@ -57,14 +58,14 @@ def post_update(request, pk):
 
         if nick != post.writer:
             messages.info(request, 'You are not allowed')
-            return HttpResponseRedirect(reverse_lazy('board_index'))
+            return render(request, 'board/post_detail.html',context=context )
 
         if form.is_valid():
             post = form.save(commit=False)
             post.post_date = datetime.datetime.now()
             post.save()
             messages.info(request, 'Successfully Modified!')
-            return HttpResponseRedirect(reverse_lazy('board_index'))
+            return render(request, 'board/post_detail.html',context=context )
     # send form
     else:
         title = post.post_title
@@ -77,6 +78,7 @@ def post_update(request, pk):
 def comment_write(request, post_pk):
     if request.method == 'POST':
         post = get_object_or_404(Post, pk=post_pk)
+        context = {'post' : post,}
         content = request.POST.get('content')
 
         conn_user = request.user
@@ -84,10 +86,10 @@ def comment_write(request, post_pk):
 
         if not content:
             messages.info(request, 'You dont write anything....')
-            return HttpResponseRedirect(reverse_lazy('post-detail', post_pk))
+            return render(request, 'board/post_detail.html',context=context )
 
         Comment.objects.create(post=post, comment_writer=conn_profile,comment_contents=content)
-        return HttpResponseRedirect(reverse_lazy('board_index'))
+        return render(request, 'board/post_detail.html',context=context )
 
 
 class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -98,3 +100,21 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
         conn_user = self.request.user
         nick = get_nick(conn_user)
         return self.model.objects.filter(writer=nick)
+
+@login_required
+def comment_delete(request, post_pk, pk):
+    post = get_object_or_404(Post, pk=post_pk)
+    comment = get_object_or_404(Comment, pk=pk)
+
+    context = {'post' : post,}
+    content = request.POST.get('content')
+
+    conn_user = request.user
+    conn_profile = Profile.objects.get(user=conn_user)
+
+    if conn_profile != comment.comment_writer:
+        messages.info(request, 'You are not allowed....')
+        return render(request, 'board/post_detail.html',context=context )
+
+    comment.delete()
+    return render(request, 'board/post_detail.html',context=context )

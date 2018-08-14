@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Code1018{% endblock %}
+
+{% block content %}
+<h2>Write Post</h2>
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <button type="submit">Write</button>
+</form>
+{% endblock %}

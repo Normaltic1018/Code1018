@@ -3,6 +3,14 @@
 {% block title %}Code1018{% endblock %}
 
 {% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script> alert('{{ message }}'); </script>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <h1>Title: {{ post.post_title }}</h1>
 
 <p><strong>Writer:</strong> <a href="{% url 'userpage' post.writer %}">{{post.writer}}</a></a></p>
@@ -11,7 +19,7 @@
 <div style="margin-left:20px;margin-top:20px">
   <h4>Contents</h4>
   {{ post.update_counter }}
-  {{ post.post_contents}}
+  {{ post.post_contents | linebreaksbr}}
 </div>
 </br></br>
 
@@ -26,7 +34,7 @@
 <hr>
 {% for comment in post.comments.all %}
     <div class="comment">
-        <div class="date">{{ comment.comment_date }}</div>
+        <div class="date">{{ comment.comment_date }} <a href="{% url 'comment_delete' post.pk comment.pk %}">Remove</a></div>
         <strong><a href="{% url 'userpage' comment.comment_writer %}">{{ comment.comment_writer }}</a></strong>
         <p>{{ comment.comment_contents }}</p>
     </div>

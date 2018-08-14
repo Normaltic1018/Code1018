@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Code1018{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script> alert('{{ message }}'); </script>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Title</th>
+      <th>Writer</th>
+      <th>Date</th>
+      <th>Likes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if tool_list %}
+      {% for tool in tool_list %}
+    <tr>
+    <td>{{ tool.id }}</td>
+    <td><a href="{{ tool.get_abolute_url }}">{{ tool.tool_title }} </a>   ( {{tool.comments.count}} )</td>
+    <td>{{ tool.writer}}</td>
+    <td>{{ tool.tool_date }}</td>
+    <td>{{ tool.tool_like }}</td>
+  </tr>
+    {% endfor %}
+    {% else %}
+      <p>There are no tools in the board.</p>
+    {% endif %}
+</tbody>
+</table>
+  <p><a href="{% url 'tool_write' %}">Write</a></p>
+{% endblock %}
