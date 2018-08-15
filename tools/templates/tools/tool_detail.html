@@ -21,7 +21,10 @@
   {{ tool.tool_contents | linebreaksbr}}
   <hr>
   {% if tool.tool_file.url %}
-    <a href="{% url 'tool_download' tool.pk %}" download>{{ tool.tool_file.name }}</a>
+    <form action="{% url 'tool_download' tool.pk %}" method="POST">
+      {% csrf_token %}
+      <button>Download</button>
+    </form>
   {% else %}
     <p> No File </p>
   {% endif %}
@@ -29,6 +32,16 @@
 </br></br>
 
 <p><a href="{% url 'tool_update' tool.pk %}" onclick="return confirm('Really Modify?')">Modify</a>&nbsp;&nbsp;<a href="{% url 'tool-delete' tool.pk %}" onclick="return confirm('Really? Delete?')">Delete</a></p>
+<form action="{% url 'like-toggle' tool_pk=tool.pk %}" method="POST">
+  {% csrf_token %}
+	<button class="btn btn-default btn-post-toggle" aria-label="Like button">
+	  {% if tool in user.profile.like_tools.all %}
+      Unlike
+		{% else %}
+  		Like
+		{% endif %}
+	</button>
+</form>
 
 <hr>
   <form action="{% url 'tool_comment_write' tool_pk=tool.pk %}" method="post">
@@ -39,7 +52,7 @@
 <hr>
 {% for comment in tool.comments.all %}
     <div class="comment">
-        <div class="date">{{ comment.comment_date }} <a href="{% url 'comment_delete' tool.pk comment.pk %}">Remove</a></div>
+        <div class="date">{{ comment.comment_date }} <a href="{% url 'tool_comment_delete' tool.pk comment.pk %}">Remove</a></div>
         <strong><a href="{% url 'userpage' comment.comment_writer %}">{{ comment.comment_writer }}</a></strong>
         <p>{{ comment.comment_contents }}</p>
     </div>

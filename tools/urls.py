@@ -11,4 +11,5 @@ urlpatterns = [
     path('delete/<int:pk>', views.ToolDeleteView.as_view(), name='tool-delete'),
     path('<int:tool_pk>/comment/delete/<int:pk>', views.comment_delete, name='tool_comment_delete'),
     path('download/<int:pk>', views.tool_download,name='tool_download'),
+    path('<int:tool_pk>/like-toggle', views.post_like_toggle, name='like-toggle'),
 ]

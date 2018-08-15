@@ -30,7 +30,7 @@
     <td><a href="{{ tool.get_abolute_url }}">{{ tool.tool_title }} </a>   ( {{tool.comments.count}} )</td>
     <td>{{ tool.writer}}</td>
     <td>{{ tool.tool_date }}</td>
-    <td>{{ tool.tool_like }}</td>
+    <td>{{ tool.like_users.count }}</td>
   </tr>
     {% endfor %}
     {% else %}

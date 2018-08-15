@@ -29,6 +29,7 @@ class Profile(models.Model):
         default='n',
         help_text='Class Level',
     )
+    like_tools = models.ManyToManyField('tools.Tool', blank=True, related_name='like_users')
 
     def __str__(self):
         return self.nick
