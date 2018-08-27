@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script> alert('{{ message }}'); </script>
+    {% endfor %}
+</ul>
+{% endif %}
+  <form method="POST" action="" class="post-form" enctype="multipart/form-data">
+    <div class="post">
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}
+        <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+          <h1>{{ post.title }}</h1>
+          <p>{{ post.text|linebreaksbr }}</p>
+        {% if post.image %}
+          <img src="{{ post.image.url }}">
+        {% endif %}
+    </div>
+{% endblock %}

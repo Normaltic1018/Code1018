@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script> alert('{{ message }}'); </script>
+    {% endfor %}
+</ul>
+{% endif %}
+<div id="content">
+    <a href="{% url 'blog:post_list' %}" class="top-menu">Home</a>
+    <h1><a href={% url 'blog:search' %}>Blog Search</a></h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Search">
+    </form>
+
+    <br><br>
+
+    {% if object_list %}
+        {% for post in object_list %}
+            <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+            {{ post.modify_date|date:'N d, Y' }}
+            <p>{{ post.text }}</p>
+        {% endfor %}
+    {% elif search_term %}
+        <b><i>Search Word({{ search_term }}) Not Found !</i></b>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <script> alert('{{ message }}'); </script>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="POST" action="" class="post-form" enctype="multipart/form-data">
+    {% for post in posts %}
+        <div class="post">
+            <p class="date">created: {{ post.created_date|date:'d-m-Y' }}</p>
+            <h1><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>{{ post.text|truncatechars:200 }}</p>
+    {% if post.image %}
+            <img src="{{ post.image.url }}" width="200" height="300">
+        </div>
+  {% endif %}
+    {% endfor %}
+{% endblock %}
